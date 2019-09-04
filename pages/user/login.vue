@@ -14,6 +14,7 @@
         <!-- 登录功能组件 -->
         <loginForm v-if="current === 0"></loginForm>
         <!-- 注册功能组件 -->
+        <register v-if="current === 1"></register>
       </div>
     </el-row>
   </div>
@@ -21,14 +22,15 @@
 
 <script>
 import loginForm from '@/components/user/loginForm'
+import register from '@/components/user/register'
 export default {
     data(){
         return{
-            current:0
+            current:1
         }
     },
     components:{
-        loginForm
+        loginForm,register
     }
 };
 </script>

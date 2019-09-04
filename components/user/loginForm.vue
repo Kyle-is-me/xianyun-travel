@@ -42,8 +42,10 @@ export default {
                     method:'post',
                     data:this.form
                 }).then((res)=>{
-                    console.log(res)
-                    localStorage.setItem('xianyun_35',res.data.token)
+                  // console.log(res)
+                   this.$store.commit('user/setUserInfo',res.data)
+                  //  跳到首页
+                  this.$router.push('/')
                 })
             }else{
                 console.log('验证失败')
@@ -52,7 +54,7 @@ export default {
     }
   },
   mounted(){
-      console.log(this.$store.state.user.userInfo.token)
+      // console.log(this.$store.state.user.userInfo.token)
   }
 };
 </script>

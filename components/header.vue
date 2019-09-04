@@ -12,15 +12,39 @@
         <nuxt-link to="air">国内机票</nuxt-link>
       </el-row>
 
-      <div class="login">
+      <div class="login" v-if="!$store.state.user.userInfo.token">
         <nuxt-link to="/user/login">登录 / 注册</nuxt-link>
+      </div>
+      <div class="userInfo" v-else>
+        <el-dropdown>
+          
+          <span class="el-dropdown-link">
+            <img :src="`${$axios.defaults.baseURL}${$store.state.user.userInfo.user.defaultAvatar}`" alt="">
+            <span>{{$store.state.user.userInfo.user.nickname}}</span>
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>个人中心</el-dropdown-item>
+            <el-dropdown-item @click.native="handleLogout">退出</el-dropdown-item>
+         
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </el-row>
   </header>
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    handleLogout(){
+      // this.$store.commit('user/clearUserInfo')
+      const {commit} = this.$store;
+      commit('user/clearUserInfo')
+      this.$message.success('退出成功')
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -72,8 +96,20 @@ export default {};
     border-bottom: 0;
     &:hover {
       text-decoration: underline;
-      color: #409eff
+      color: #409eff;
     }
+  }
+}
+
+.el-dropdown-link img{
+  width: 36px;
+  height: 36%;
+  vertical-align: middle;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  &:hover{
+    border: 2px solid #409eff
   }
 }
 </style>

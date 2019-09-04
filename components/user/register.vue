@@ -23,21 +23,25 @@
 <script>
 export default {
   data() {
+    // rule是当前的规则，目前是空
+    // value输入框的内容
+    // callback是回调函数，必须调用
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
       } else if (value !== this.form.password) {
         callback(new Error("两次输入密码不一致!"));
       } else {
+        // 代表验证通过
         callback();
       }
     };
     return {
       form: {
         username: "", //用户名
-        nickname: "",
-        captcha: "",
-        password: "",
+        nickname: "",//昵称
+        captcha: "",//验证信息
+        password: "",//密码
         chkPassword: ""
       },
       rules: {
@@ -77,16 +81,25 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
             //调用注册接口
-          this.$axios({
-            url: "/accounts/register",
-            method: "post",
-            data: rest
-          }).then(res => {
-            // console.log(res);
-            // 注册成功后帮客户自动登录
-            this.$store.commit('user/setUserInfo',res.data)
+          // this.$axios({
+          //   url: "/accounts/register",
+          //   method: "post",
+          //   data: rest
+          // }).then(res => {
+          //   // console.log(res);
+          //   // 注册成功后帮客户自动登录
+          //   this.$store.commit('user/setUserInfo',res.data)
+          //   this.$message.success('注册成功')
+          // });
+
+          //用actions来实现
+          this.$store.dispatch('user/register',rest)
+          .then((res)=>{
+            //提示成功
             this.$message.success('注册成功')
-          });
+            //跳转到首页
+            this.$router.push('/')
+          })
         }else{
             this.$message.error('请填入必填信息')
         }

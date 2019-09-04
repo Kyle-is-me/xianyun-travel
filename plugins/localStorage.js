@@ -5,8 +5,8 @@ export default ({ store }) => {
     // console.log(obj)
     window.onNuxtReady(() => {
         createPersistedState({
-            key: 'key',//可以使任意字符
-            paths: []
+            key: 'store',//可以使任意字符,设置本地存储中的键的名字
+            paths: [] //同一个键，有多个值的时候，选出想要的值的路径
         })(store)
     })
 }

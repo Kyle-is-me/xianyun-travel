@@ -33,29 +33,32 @@ export default {
   },
   methods: {
     handleSubmit() {
-        //二次验证
-        this.$refs.form.validate((valid)=>{
-            if(valid){
-                // console.log(this.form);
-                this.$axios({
-                    url:'/accounts/login',
-                    method:'post',
-                    data:this.form
-                }).then((res)=>{
-                  // console.log(res)
-                   this.$store.commit('user/setUserInfo',res.data)
-                  //  跳到首页
-                  this.$router.push('/')
-                })
-            }else{
-                console.log('验证失败')
-            }
-        })
+      //二次验证
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          // this.$axios({
+          //     url:'/accounts/login',
+          //     method:'post',
+          //     data:this.form
+          // }).then((res)=>{
+
+          //    this.$store.commit('user/setUserInfo',res.data)
+          //   //  跳到首页
+          //   this.$router.push('/')
+          // })
+          this.$store.dispatch("user/login", this.form).then(res => {
+            //提示成功
+            this.$message.success("登录成功");
+            //  跳到首页
+            this.$router.push("/");
+          });
+        } else {
+          console.log("验证失败");
+        }
+      });
     }
   },
-  mounted(){
-      // console.log(this.$store.state.user.userInfo.token)
-  }
+  mounted() {}
 };
 </script>
 
@@ -69,15 +72,15 @@ export default {
   }
 
   .form-text {
-      font-size: 12px;
-      color:#409EFF;
-      text-align: right;
-      line-height: 1;
+    font-size: 12px;
+    color: #409eff;
+    text-align: right;
+    line-height: 1;
   }
 
   .submit {
-      width: 100%;
-      margin-top: 10px;
+    width: 100%;
+    margin-top: 10px;
   }
 }
 </style>

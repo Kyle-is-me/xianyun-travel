@@ -26,6 +26,16 @@ export default {
     // rule是当前的规则，目前是空
     // value输入框的内容
     // callback是回调函数，必须调用
+    var validatePassword = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.form.chkPassword !== '') {
+            this.$refs.form.validateField('chkPassword');
+          }
+          callback();
+        }
+      };
     var validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
@@ -50,7 +60,8 @@ export default {
         ],
         nickname: [{ required: true, message: "请输入昵称", trigger: "blur" }],
         captcha: [{ required: true, message: "请输入验证码", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        // password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [{ validator: validatePassword, trigger: "blur" }],
         chkPassword: [{ validator: validatePass, trigger: "blur" }]
       }
     };

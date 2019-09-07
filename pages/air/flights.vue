@@ -4,15 +4,9 @@
       <!--内容正文区域  -->
       <div class="content">
         <!-- 筛选区 -->
-        <div class="filter">
-          <el-row type="flex" justify="space-between">
-            <el-col :span="8">
-              <span>单程：</span>
-            </el-col>
-            <el-col :span="16"></el-col>
-          </el-row>
-          <div class="filter-cancel"></div>
-        </div>
+        
+         <FlightsFilters :list="flightsData" />
+      
 
         <!-- 航班信息头部 -->
         <FlightListHead />
@@ -46,6 +40,7 @@
 <script>
 import FlightListHead from "@/components/air/flightsListHead";
 import FlightsListItem from "@/components/air/flightsListItem";
+import FlightsFilters from '@/components/air/flightsFilters'
 export default {
   data() {
     return {
@@ -79,18 +74,23 @@ export default {
       url: "/airs",
       params: this.$route.query
     }).then(res => {
-      // console.log(res);
+      console.log(res);
       //赋值给总数据
       this.flightsData = res.data;
       // 分页的总条数
       this.total = this.flightsData.flights.length
       // 存储第一页的值
       this.flightsList = this.flightsData.flights.slice(0,this.pageSize)
-    });
+    }),
+    this.$on('selectAirport',(data)=>{
+      console.log(data)
+      console.log(123)
+    })
+
   },
   components: {
     FlightListHead,
-    FlightsListItem
+    FlightsListItem,FlightsFilters
   }
 };
 </script>

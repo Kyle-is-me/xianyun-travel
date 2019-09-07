@@ -21,6 +21,7 @@
           :fetch-suggestions="queryDepartSearch"
           v-model="form.departCity"
           @select="handleDepartSelect"
+          @blur="defaultDepCity"
         ></el-autocomplete>
       </el-form-item>
       <el-form-item label="到达城市" class="form-item">
@@ -30,6 +31,7 @@
           :fetch-suggestions="queryDestSearch"
           v-model="form.destCity"
           @select="handleDestSelect"
+          @blur="defaultDestCity"
         ></el-autocomplete>
       </el-form-item>
       <el-form-item label="选择日期">
@@ -67,10 +69,23 @@ export default {
         destCity: "",
         destCode: "",
         departDate: ""
-      }
+      },
+      depCityArr:[],//存储后台返回的出发城市数组
+      destCityArr:[]//存储后台返回的到达城市数组
     };
   },
   methods: {
+    // 出发城市搜索失焦事件
+    defaultDepCity(){
+      this.form.departCity = this.depCityArr[0] ? this.depCityArr[0].value : '';
+      this.form.departCode = this.depCityArr[0] ? this.depCityArr[0].sort : ''
+    },
+    //到达城市搜索框失焦事件
+    defaultDestCity(){
+      this.form.destCity = this.destCityArr[0] ? this.destCityArr[0].value : '';
+      this.form.destCode = this.destCityArr[0] ? this.destCityArr[0].sort : ''
+    },
+
     changeTab(index) {
       if (index === 1) {
         this.$alert("目前暂不支持往返，请选择单程机票！", "提示");
@@ -105,9 +120,10 @@ export default {
           //    将带有value属性的对象添加到newArr
           newArr.push(v);
         });
+        this.depCityArr = newArr
         //设置默认值
-        this.form.departCity = newArr[0].value;
-        this.form.departCode = newArr[0].sort;
+        // this.form.departCity = newArr[0].value;
+        // this.form.departCode = newArr[0].sort;
         //存到cb中--显示到下拉列表中
         cb(newArr);
       });
@@ -136,8 +152,10 @@ export default {
           //将包含value属性的对象插入到新数组中
           newArr.push(v);
         });
-        this.form.destCity = newArr[0].value;
-        this.form.destCode = newArr[0].sort;
+        this.destCityArr = newArr
+        // //设置默认值
+        // this.form.destCity = newArr[0].value;
+        // this.form.destCode = newArr[0].sort;
         //显示到下拉框
         cb(newArr);
       });

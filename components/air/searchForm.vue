@@ -70,20 +70,20 @@ export default {
         destCode: "",
         departDate: ""
       },
-      depCityArr:[],//存储后台返回的出发城市数组
-      destCityArr:[]//存储后台返回的到达城市数组
+      depCityArr: [], //存储后台返回的出发城市数组
+      destCityArr: [] //存储后台返回的到达城市数组
     };
   },
   methods: {
     // 出发城市搜索失焦事件
-    defaultDepCity(){
-      this.form.departCity = this.depCityArr[0] ? this.depCityArr[0].value : '';
-      this.form.departCode = this.depCityArr[0] ? this.depCityArr[0].sort : ''
+    defaultDepCity() {
+      this.form.departCity = this.depCityArr[0] ? this.depCityArr[0].value : "";
+      this.form.departCode = this.depCityArr[0] ? this.depCityArr[0].sort : "";
     },
     //到达城市搜索框失焦事件
-    defaultDestCity(){
-      this.form.destCity = this.destCityArr[0] ? this.destCityArr[0].value : '';
-      this.form.destCode = this.destCityArr[0] ? this.destCityArr[0].sort : ''
+    defaultDestCity() {
+      this.form.destCity = this.destCityArr[0] ? this.destCityArr[0].value : "";
+      this.form.destCode = this.destCityArr[0] ? this.destCityArr[0].sort : "";
     },
 
     changeTab(index) {
@@ -120,7 +120,7 @@ export default {
           //    将带有value属性的对象添加到newArr
           newArr.push(v);
         });
-        this.depCityArr = newArr
+        this.depCityArr = newArr;
         //设置默认值
         // this.form.departCity = newArr[0].value;
         // this.form.departCode = newArr[0].sort;
@@ -152,7 +152,7 @@ export default {
           //将包含value属性的对象插入到新数组中
           newArr.push(v);
         });
-        this.destCityArr = newArr
+        this.destCityArr = newArr;
         // //设置默认值
         // this.form.destCity = newArr[0].value;
         // this.form.destCode = newArr[0].sort;
@@ -200,6 +200,12 @@ export default {
         return;
       }
 
+      //先获取本地存储
+      const arr = JSON.parse(localStorage.getItem("airs")) || [];
+      arr.push(this.form);
+      //将数据存到本地存储
+      localStorage.setItem("airs", JSON.stringify(arr));
+
       // 跳转页面，并传递参数
       this.$router.push({
         path: "/air/flights",
@@ -209,11 +215,11 @@ export default {
 
     //转换出发目的地
     handleReseverse() {
-        const {departCity,departCode,destCity,destCode} = this.form
-        this.form.departCity = destCity
-        this.form.departCode = destCode
-        this.form.destCity = departCity
-        this.form.destCode = departCode
+      const { departCity, departCode, destCity, destCode } = this.form;
+      this.form.departCity = destCity;
+      this.form.departCode = destCode;
+      this.form.destCity = departCity;
+      this.form.destCode = departCode;
     }
   }
 };

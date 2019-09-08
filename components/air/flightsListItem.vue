@@ -47,7 +47,7 @@
             </el-col>
             <el-col :span="5" class="price">￥{{item.org_settle_price}}</el-col>
             <el-col :span="3" class="choose-button">
-              <el-button type="warning" size="mini">选定</el-button>
+              <el-button type="warning" size="mini" @click="handleSelect(item.seat_xid)">选定</el-button>
               <p>剩余:{{item.discount}}</p>
             </el-col>
           </el-row>
@@ -75,6 +75,19 @@ export default {
     return {
         isShow:false
     };
+  },
+  methods:{
+    // 选定机票触发的事件
+    handleSelect(seat_xid){
+      //跳转到机票订单页面
+      this.$router.push({
+        path:'/air/order',
+        query:{
+          id:this.data.id,
+          seat_xid
+        }
+      })
+    }
   },
   computed: {
     //用计算属性来计算飞行时间

@@ -71,7 +71,7 @@ export default {
         url: "/airs",
         params: this.$route.query
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         //赋值给总数据
         this.flightsData = res.data;
         //缓存一份总数据,这个列表不会被修改，而this.flightsData会被修改

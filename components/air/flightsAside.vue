@@ -21,7 +21,11 @@
     <!-- 历史查询 -->
     <div class="history">
       <h5 class="history-refer">历史查询</h5>
-      <nuxt-link :to="`?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`" v-for="(item,index) in history" :key="index">
+      <nuxt-link
+        :to="`?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`"
+        v-for="(item,index) in history"
+        :key="index"
+      >
         <el-row class="history-item" type="flex" align="middle" justify="space-between">
           <div class="air-info">
             <div class="to-from">{{item.departCity}} - {{item.destCity}}</div>
@@ -42,9 +46,15 @@ export default {
     };
   },
   mounted() {
-    const arr = JSON.parse(localStorage.getItem("airs")) || [];
+    // const arr = JSON.parse(localStorage.getItem("airs")) || [];
     //   console.log(arr)
-    this.history = arr;
+    setTimeout(() => {
+      //使用vuex的方式
+      const arr = this.$store.state.searchHistory.searchHistory;
+      // console.log(this.$store.state)
+      console.log(arr);
+      this.history = arr;
+    }, 10);
   }
 };
 </script>

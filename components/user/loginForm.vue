@@ -50,7 +50,7 @@ export default {
             //提示成功
             this.$message.success("登录成功");
             //  跳到首页
-            this.$router.push("/");
+            this.$router.back();
           });
         } else {
           console.log("验证失败");

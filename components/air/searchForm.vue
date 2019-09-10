@@ -200,11 +200,14 @@ export default {
         return;
       }
 
-      //先获取本地存储
-      const arr = JSON.parse(localStorage.getItem("airs")) || [];
-      arr.push(this.form);
-      //将数据存到本地存储
-      localStorage.setItem("airs", JSON.stringify(arr));
+      // //先获取本地存储
+      // const arr = JSON.parse(localStorage.getItem("airs")) || [];
+      // arr.push(this.form);
+      // //将数据存到本地存储
+      // localStorage.setItem("airs", JSON.stringify(arr));
+      
+      //使用vuex来存储查询历史
+      this.$store.dispatch('searchHistory/setSearchHistory',this.form)
 
       // 跳转页面，并传递参数
       this.$router.push({

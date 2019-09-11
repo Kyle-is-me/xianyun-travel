@@ -7,7 +7,7 @@
 
         <!-- 订单表单 -->
       <!-- <div class="orderForm"></div> -->
-      <OrderAside/>
+      <OrderAside :data="$store.state.air.infoData"/>
     </el-row>
   </div>
 </template>
